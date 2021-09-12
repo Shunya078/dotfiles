@@ -1,0 +1,42 @@
+[user]
+	email = kikukan007@gmail.com
+	name = Shunya078
+[push]
+	default = current
+[core]
+	excludesfile = /Users/otsuboshunya/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/otsuboshunya/.stCommitMsg
+[alias]
+	alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
+  ga = git add .
+  gaa = git add .
+  gaaa = git add .
+  gaaaa = git add .
+  gaaaaa = git add .
+  b = branch -a
+  bd = branch -d
+	c = commit
+  cm = commit -m
+  co = checkout
+  d = diff
+  f = fetch
+  s = status --short --branch
+  ignore = !([ ! -e .gitignore ] && touch .gitignore) | echo $1 >> .gitignore
+
+  l = log --graph -n 20 --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(green)- %an, %cr%Creset'
+  ll = log --stat --abbrev-commit
+  ln = log --graph -n 20 --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(green)- %an, %cr%Creset' --name-status
+  lp = log --oneline -n 20 -p
+  log-all = log --graph --all --color --date=short --pretty=format:'%x09%Cgreen%h %cd %Cblue%cn%x09%Creset%s %Cred%d%Creset'
+
+  sweep-branch = !git branch --merged | egrep -v '(^\\*|master|develop)' | xargs git branch -d
+
+[color]
+  ui = true
