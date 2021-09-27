@@ -91,6 +91,10 @@ call dein#add("rhysd/clever-f.vim")
 call dein#add("tyru/open-browser.vim")
 call dein#add("cocopon/vaffle.vim")
 call dein#add("inkarkat/vim-SyntaxRange")
+call dein#add("lambdalisue/fern.vim")
+call dein#add("lambdalisue/fern-git-status.vim")
+call dein#add("lambdalisue/glyph-palette.vim")
+
 nmap go <Plug>(openbrowser-smart-search)"
 vmap go <Plug>(openbrowser-smart-search)"
 
@@ -111,43 +115,27 @@ if dein#check_install()
 endif
 
 "End dein Scripts-------------------------
-"
-"
-function! s:customize_vaffle_mappings() abort
-  nmap <buffer> <Bslash> <Plug>(vaffle-open-root)
-  nmap <buffer> o        <Plug>(vaffle-mkdir)
-  nmap <buffer> i        <Plug>(vaffle-new-file)
-  nmap <buffer> h        <Plug>(vaffle-open-parent)
-  nmap <buffer> l        <Plug>(vaffle-open-current)
-  nmap <buffer> <CR>     <Plug>(vaffle-open-current)
-  nmap <buffer> t        <Plug>(vaffle-open-current-tab)
-  nmap <buffer> s        <Plug>(vaffle-open-selected-split)
-  nmap <buffer> v        <Plug>(vaffle-open-selected-vsplit)
-  nmap <buffer> d        <Plug>(vaffle-delete-selected)
-  nmap <buffer> r        <Plug>(vaffle-rename-selected)
-  nmap <buffer> R        <Plug>(vaffle-refresh)
-  nmap <buffer> x        <Plug>(vaffle-fill-cmdline)
-  nmap <buffer> m
-  <Plug>(vaffle-move-selected)
-  endfunction
+nnoremap <C-n> :Fern . -reveal=% -drawer -toggle -width=35<CR>
+augroup my-glyph-palette
+  autocmd! *
+  autocmd FileType fern call glyph_palette#apply()
+  autocmd FileType nerdtree,startify call glyph_palette#apply()
+augroup END
 
-  augroup vimrc_vaffle
+augroup vimrc_vaffle
   autocmd!
   autocmd FileType vaffle call
-  s:customize_vaffle_mappings()
-  augroup END
+augroup END
 
-  function! VaffleRenderCustomIcon(item)
-  return WebDevIconsGetFileTypeSymbol(a:item.basename,
-  a:item.is_dir)
-  endfunction
+nnoremap <silent> <Leader>f :execute
+":Vaffle" expand("%:h")<CR>
+let g:vaffle_show_hidden_files = 1
+let g:vaffle_auto_cd = 0
+let g:vaffle_use_default_mappings = 0
+let g:vaffle_open_selected_split_position =  'rightbelow'
+let g:vaffle_open_selected_vsplit_position  = 'rightbelow'
+let g:vaffle_render_custom_icon =  'VaffleRenderCustomIcon'
+let g:fern#renderer = 'nerdfont'
 
-  nnoremap <silent> <Leader>f :execute
-  ":Vaffle" expand("%:h")<CR>
-  let g:vaffle_show_hidden_files = 1
-  let g:vaffle_auto_cd = 0
-  let g:vaffle_use_default_mappings = 0
-  let g:vaffle_open_selected_split_position =  'rightbelow'
-  let g:vaffle_open_selected_vsplit_position  = 'rightbelow'
-  let g:vaffle_render_custom_icon =  'VaffleRenderCustomIcon'
-  set cmdheight=2
+set cmdheight=2
+

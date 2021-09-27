@@ -99,6 +99,14 @@ alias ga="git add ."
 alias gaa="git add ."
 alias gaaa="git add ."
 
+alias q="exit"
+alias :q="exit"
+
+alias vv="vim ~/.vimrc"
+alias vz="vim ~/.zshrc"
+alias ez="exec zsh"
+
+
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # new_line
@@ -161,3 +169,8 @@ alias co='
     '
 
 export FZF_DEFAULT_OPTS='--height 40% --border'
+
+source ~/.bash_profile
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
