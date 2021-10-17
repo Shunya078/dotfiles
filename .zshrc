@@ -6,11 +6,11 @@
 # ==================================
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+  print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+  command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+  command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+    print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
 eval "$(starship init zsh)"
@@ -21,10 +21,10 @@ autoload -Uz _zinit
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
-    zinit-zsh/z-a-rust \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-bin-gem-node
+  zinit-zsh/z-a-rust \
+  zinit-zsh/z-a-as-monitor \
+  zinit-zsh/z-a-patch-dl \
+  zinit-zsh/z-a-bin-gem-node
 
 zinit light zdharma/fast-syntax-highlighting
 zinit light paulirish/git-open
@@ -102,8 +102,11 @@ alias gaaa="git add ."
 alias q="exit"
 alias :q="exit"
 
-alias vv="vim ~/.vimrc"
-alias vz="vim ~/.zshrc"
+alias vi="nvim"
+alias vim="nvim"
+alias vimcf="vim ~/.config/nvim"
+alias vv="nvim ~/.vimrc"
+alias vz="nvim ~/.zshrc"
 alias ez="exec zsh"
 
 
@@ -114,9 +117,9 @@ function precmd() {
   # Print a newline before the prompt, unless it's the
   # first prompt in the process.
   if [ -z "$NEW_LINE_BEFORE_PROMPT" ]; then
-      NEW_LINE_BEFORE_PROMPT=1
+    NEW_LINE_BEFORE_PROMPT=1
   elif [ "$NEW_LINE_BEFORE_PROMPT" -eq 1 ]; then
-      echo ""
+    echo ""
   fi
 }
 
@@ -158,15 +161,15 @@ function _makedir_then_changedir(){
 alias mcdir='_makedir_then_changedir'
 
 alias co='
-  git branch -a | \
-    sed -e "s/[ ,\*]//g" |\
-    sed -e "s/remotes\/origin\///g" |\
-    sed -e "s/HEAD->//g" |\
-    sort -u |\
-    fzf |\
-    tr -d "\n" |\
-    xargs git checkout
-    '
+git branch -a | \
+  sed -e "s/[ ,\*]//g" |\
+  sed -e "s/remotes\/origin\///g" |\
+  sed -e "s/HEAD->//g" |\
+  sort -u |\
+  fzf |\
+  tr -d "\n" |\
+  xargs git checkout
+  '
 
 export FZF_DEFAULT_OPTS='--height 40% --border'
 
@@ -174,3 +177,11 @@ source ~/.bash_profile
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+export PATH=$PATH:./node_modules/.bin
+
+function killport () {
+  kill `lsof -ti tcp:$1`
+}
+

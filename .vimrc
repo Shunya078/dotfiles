@@ -64,7 +64,7 @@ nnoremap J gJ"]]
 
 "dein Scripts-----------------------------
 if &compatible
-  set nocompatible               " Be iMproved
+	set nocompatible               " Be iMproved
 endif
 "
 " Required:
@@ -94,6 +94,14 @@ call dein#add("inkarkat/vim-SyntaxRange")
 call dein#add("lambdalisue/fern.vim")
 call dein#add("lambdalisue/fern-git-status.vim")
 call dein#add("lambdalisue/glyph-palette.vim")
+call dein#add("lambdalisue/nerdfont.vim")
+call dein#add("lambdalisue/fern-renderer-nerdfont.vim")
+call dein#add("907th/vim-auto-save")
+call dein#add("prettier/vim-prettier", {'build': 'yarn install'})
+call dein#add("alvan/vim-closetag")
+call dein#add("Yggdroot/indentLine")
+call dein#add("vim-denops/denops.vim")
+call dein#add("neoclide/coc.nvim", {"merged":0, "rev": "release"})
 
 nmap go <Plug>(openbrowser-smart-search)"
 vmap go <Plug>(openbrowser-smart-search)"
@@ -106,36 +114,62 @@ nnoremap <silent> <Leader>b :Buf<CR>
 call dein#end()
 
 " Required:
-filetype plugin indent on
+        filetype plugin indent on
 syntax enable
 
 " If you want to install not installed plugins on startup.
 if dein#check_install()
-  call dein#install()
+	call dein#install()
 endif
 
 "End dein Scripts-------------------------
 nnoremap <C-n> :Fern . -reveal=% -drawer -toggle -width=35<CR>
 augroup my-glyph-palette
-  autocmd! *
-  autocmd FileType fern call glyph_palette#apply()
-  autocmd FileType nerdtree,startify call glyph_palette#apply()
+	autocmd! *
+	autocmd FileType fern call glyph_palette#apply()
+	autocmd FileType nerdtree,startify call glyph_palette#apply()
 augroup END
 
 augroup vimrc_vaffle
-  autocmd!
-  autocmd FileType vaffle call
+	autocmd!
+	autocmd FileType vaffle call
 augroup END
 
-nnoremap <silent> <Leader>f :execute
-":Vaffle" expand("%:h")<CR>
+nnoremap <silent> <Leader>f :execute ":Vaffle" expand("%:h")<CR>
 let g:vaffle_show_hidden_files = 1
 let g:vaffle_auto_cd = 0
 let g:vaffle_use_default_mappings = 0
 let g:vaffle_open_selected_split_position =  'rightbelow'
 let g:vaffle_open_selected_vsplit_position  = 'rightbelow'
 let g:vaffle_render_custom_icon =  'VaffleRenderCustomIcon'
+
 let g:fern#renderer = 'nerdfont'
+let g:fern#default_hidden=1
+
+let g:auto_save = 0
+let g:prettier#autoformat_require_pragma = 0
+let g:prettier#exec_cmd_path = "/Users/otsuboshunya/.vim/pack/plugins/start/vim-prettier/node-modules/.bin/prettier"
+let g:prettier#quickfix_enabled = 0
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.erb,*.php,*.vue'
+
+let g:indentLine_color_term = 239
+let g:indentLine_setColors = 0
+let g:indentLine_bgcolor_term = 202
+    let g:indentLine_bgcolor_gui = '#FF5F00'
 
 set cmdheight=2
+set completeopt=menuone,noinsert
+inoremap <expr><CR>  pumvisible() ? "<C-y>" : "<CR>"
 
+set completeopt=menuone,noinsert
+inoremap <expr><C-n> pumvisible() ? "<Down>" : "<C-n>"
+inoremap <expr><C-p> pumvisible() ? "<Up>" : "<C-p>"
+
+nnoremap <C-p> :FZF<CR>
+nnoremap <C-l> :Prettier<CR>
+
+"CocConfig------------------------------
+let g:coc_global_extensions = 'coc-json,coc-yaml,coc-pyright,coc-tsserver,coc-solargraph,coc-tabnine'
+nmap <silent> <space><space> :<C-u>CocList<CR>
+nmap <silent> <space>df <Plug>(coc-definition)
+nmap <silent> <space>rf <Plug>(coc-references)
